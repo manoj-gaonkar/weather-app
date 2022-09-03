@@ -1,25 +1,45 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect, HttpResponseRedirect, reverse
 import requests
+from django.contrib import messages
+# for getting current location of the user
+import geocoder
+from geopy.geocoders import Nominatim
+
+
 
 def home(request):
+    g = geocoder.ip('me')
+    geolocator = Nominatim(user_agent='http')
+    location = geolocator.reverse(g.latlng)
+    address = location.raw['address']
+    main = address.get('city')
+
+
     if request.method == "POST":
         city = request.POST.get('city')
         url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=7d52319e84228356ec16d3b335a712b5&units=metric'
         r = requests.get(url.format(city)).json()
+        print(r)
         weather_data = {
             'temp': round(r['main']['temp']),
-            'desc': r['weather'][0]['description']
+            'desc': r['weather'][0]['description'],
+            'city': r['name']
         }
-        print(r)
         context = {
             'weather_data': weather_data, 
-
         }
-
-
-        return render(request, 'weather/weather.html',context)
+        print("postrew")
     else:
-        return render(request, 'weather/weather.html')
+        context ={
+            'weather_data':{
+                
+            }
+        }
+    return render(request,'weather/weather.html',context)
+            
+
+    
+    
 
 def description(request):
-    return render(request, 'weatherdesc.html')
+    return redirect(request, 'weatherdesc.html')
