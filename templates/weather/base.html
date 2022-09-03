@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Weather app</title>
   </head>
   <body>
     
 
-    <div class="relative h-screen w-screen bg-[rgba(0,0,0,0.5)]">
+    <div class="relative h-screen w-screen bg-[rgba(0,0,0,0.4)]">
       <div>
         <img
           class="absolute top-0 left-0 -z-10 h-screen w-screen bg-repeat object-cover"
-          src="https://images.unsplash.com/photo-1528722828814-77b9b83aafb2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+          src="https://images.unsplash.com/photo-1470102008679-243edbe1039a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
           alt=""
         />
       </div>
@@ -23,51 +24,38 @@
           Weathery
         </h1>
       </div>
-      <form action="/" method="POST">
+      <form action="/home" method="POST" onsubmit="window.location.reload();">
           {% csrf_token %}
-      <div class="flex items-center justify-center py-5">
+          <div class="flex items-center justify-center py-5 ">
+          <div class="rounded border border-gray-500 w-2/3 sm:w-2/5 flex justify-start">
+            <button type='submit' class="px-3 flex justify-center items-center">
+             <span class="material-symbols-outlined  text-white">
+search
+</span>
+        </button>
+        <input type="text" value="bangalore" name='city' class="hidden"></input>
+       
           <input
             type="text"
             name='city'
-            class="w-2/3 rounded border border-gray-500 bg-transparent px-3 py-2 text-center text-gray-100 outline-none placeholder:text-center sm:w-2/5"
+            class=" placeholder:text-[rgba(255,255,255,0.2)]   w-full bg-transparent  py-2 text-gray-100 outline-none px-2 "
             placeholder="Search city"
           />
-        </div>
-    </form>
-      <div class="m-auto h-fit w-2/3 sm:w-2/5">
-        <div class="relative">
-          <!--box starts here-->
-          {% if weather_data %}
-          <div
-            class="absolute left-0 right-0 -z-10 h-28 w-full rounded bg-[rgba(255,255,255,0.25)] backdrop-blur-lg backdrop:blur-xl"
-          ></div>
-          <div class="p-3">
-            <div class="flex justify-between">
-              <span
-                class="flex items-start justify-start text-4xl text-gray-200"
-                >{{ weather_data.temp }}<span class="text-base">°C</span></span
-              >
-              <p class="text-gray-200 uppercase text-xs">
-                {{ weather_data.city }}
-              </p>
-            </div>
-            <div>
-              <p
-                class="text-[rgba(255,255,255,0.6)] lowercase font-medium text-xs"
-              >
-                {{ weather_data.desc }}
-              </p>
-            </div>
-          </div>
-        </div>
-        {% endif %}
-      </div>
 
-      <div
-        class="bg-whiteop absolute left-40 top-40 rounded-md bg-cover transition-all duration-1000 ease-in-out group-hover:scale-125"
-      ></div>
+          <button type='submit' class="flex justify-center items-center px-3 ">
+            <span class="material-symbols-outlined text-white">
+location_on
+</span>
+</button>
+        </div>
+        
     </div>
+    </form>
+    {% block content %}
+    <!--content block-->
+    {% endblock content %}
 
-    <div></div>
+
+    
   </body>
 </html>
