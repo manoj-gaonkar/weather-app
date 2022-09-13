@@ -21,7 +21,7 @@ def home(request):
     elif address.get('state'):
         main = address.get('state')
 
-
+    weather_data ={}
     if request.method == "POST":
         city = request.POST.get('city')
         print(len(city),main)
@@ -32,26 +32,20 @@ def home(request):
         print(new_city)
         url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=7d52319e84228356ec16d3b335a712b5&units=metric'
         r = requests.get(url.format(new_city)).json()
-        print(r['cod'])
+        print(r)
         if r['cod'] != 200:
             print("inside cod")
             return render(request, 'weather/weather.html',{'messages' : f"No results found"})
         print('outside cod')
         weather_data = {
             'temp': round(r['main']['temp']),
+            'pressure': r['main']['pressure'],
             'desc': r['weather'][0]['description'],
-            'city': r['name']
+            'city': r['name'],
+            'wind_speed': r['wind']['speed'],
+            'icon': r['weather'][0]['icon'],
         }
-        context = {
-            'weather_data': weather_data, 
-        }
-    else:
-        context ={
-            'weather_data':{
-                
-            }
-        }
-    return render(request,'weather/weather.html',context)
+    return render(request,'weather/weather.html',{'weather_data': weather_data})
             
 
     

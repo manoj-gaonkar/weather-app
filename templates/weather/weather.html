@@ -18,23 +18,37 @@
           <!--box starts here-->
           {% if weather_data %}
           <div
-            class="absolute left-0 right-0 -z-10 h-28 w-full rounded bg-[rgba(255,255,255,0.125)]  backdrop-blur-lg backdrop:blur-xl "
+            class="absolute left-0 right-0 -z-10 h-full w-full rounded bg-[rgba(255,255,255,0.125)]  backdrop-blur-lg backdrop:blur-xl "
           ></div>
           <div class="p-4 flex flex-col justify-between">
+
             <div class="flex justify-between">
-              <span
+              <span class="flex justify-start">
+                <img  src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="#">
+                <span
                 class="flex items-start justify-start text-4xl text-gray-200"
                 >{{ weather_data.temp }}<span class="text-base">°C</span></span
-              >
+                >
+              </span>
               <p class="text-gray-200 uppercase text-xs">
                 {{ weather_data.city }}
               </p>
             </div>
-            <div>
+            <div class="flex flex-col">
               <p
-                class="text-[rgba(255,255,255,0.6)] lowercase font-medium text-xs"
+                class="text-[rgba(255,255,255,0.6)] lowercase font-medium text-xs py-1"
               >
                 {{ weather_data.desc }}
+              </p>
+              <p
+                class="text-[rgba(255,255,255,0.6)] lowercase font-medium text-xs py-1"
+              >
+                Pressure :{{ weather_data.pressure }}
+              </p>
+              <p
+                class="text-[rgba(255,255,255,0.6)] lowercase font-medium text-xs py-1"
+              >
+                Wind speed :{{ weather_data.wind_speed }}
               </p>
             </div>
           </div>
